@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TablesService } from './tables.service';
 import { TablesController } from './tables.controller';
-import { TypeormModule } from '../typeorm.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Table } from './entities/table.entity';
 
 @Module({
-  providers: [TablesService, TypeormModule],
+  imports: [TypeOrmModule.forFeature([Table])],
+  providers: [TablesService],
   controllers: [TablesController],
 })
 export class TablesModule {}
