@@ -5,13 +5,18 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RegisterDto } from './dto/register';
 import { LoginDto } from './dto/login.dto';
+import { Token } from './entities/token-entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Token)
+    private readonly tokenRepository: Repository<Token>,
     private readonly JWTService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async register(registerDto: RegisterDto): Promise<User> {
@@ -21,7 +26,8 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<{ access_token: string }> {
     const user = await this.validateUser(loginDto.username, loginDto.password);
-    const tokenPayload = { userId: user.id, username: user.username };
+    const jti = Math.random().toString(36).substring(10);
+    const tokenPayload = { userId: user.id, username: user.username, jti };
     return {
       access_token: this.JWTService.sign(tokenPayload),
     };
