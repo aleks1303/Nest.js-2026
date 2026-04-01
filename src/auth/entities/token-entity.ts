@@ -25,5 +25,5 @@ export class Token {
   jti: string;
 
   @ManyToOne(() => User, (user) => user.tokens)
-  user = User;
+  user: User;
 }
