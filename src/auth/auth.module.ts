@@ -7,7 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { JwtStrategy } from './jwt.strategy';
-import { Token } from './entities/token-entity';
+import { Token } from './entities/token.entity';
 
 @Module({
   imports: [

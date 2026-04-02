@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import bcrypt from 'bcrypt';
-import { Token } from './token-entity';
+import { Token } from './token.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()

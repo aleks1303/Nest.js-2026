@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RegisterDto } from './dto/register';
 import { LoginDto } from './dto/login.dto';
-import { Token } from './entities/token-entity';
+import { Token } from './entities/token.entity';
 import { ConfigService } from '@nestjs/config';
 import { ITokens } from './interfaces/tokens.interface';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
@@ -36,7 +36,7 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<ITokens> {
     const user = await this.validateUser(loginDto.username, loginDto.password);
-    const jti = Math.random().toString(36).substring(10);
+    const jti = Math.random().toString(36).substring(2);
     const payload = { userId: user.id, username: user.username, jti };
     const accessToken = this.JWTService.sign(payload, {
       expiresIn: `${this.accessTokenExpiresIn}s`,
@@ -72,7 +72,7 @@ export class AuthService {
       tokenEntity.isBlocked = true;
       await this.tokenRepository.save(tokenEntity);
 
-      const jti = Math.random().toString(36).substring(10);
+      const jti = Math.random().toString(36).substring(2);
       const payload = {
         userId: tokenEntity.user.id,
         username: tokenEntity.user.username,
