@@ -3,6 +3,7 @@
 /node_modules
 /build
 /mysql_db
+/aws.zip
 
 # Logs
 logs
